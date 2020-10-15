@@ -40,7 +40,7 @@ test:
     - jupyter kernelspec list
     - jupyter kernelspec list | grep kernels/ansible
     - cp ${RECIPE_DIR}/*.ipynb .
-    - jupyter nbconvert *.ipynb --execute
+    - jupyter nbconvert *.ipynb --execute --to=html
     - jupyter nbconvert *.ipynb --to ansible_tasks
     - jupyter nbconvert *.ipynb --to ansible_playbook
     - jupyter nbconvert *.ipynb --to ansible_zip
