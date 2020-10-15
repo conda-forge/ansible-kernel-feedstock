@@ -13,7 +13,7 @@ source:
 
 build:
   skip: true  # [win]
-  number: 0
+  number: 1
   script: "{{ PYTHON }} -m pip install . -vv"
 
 requirements:
@@ -32,15 +32,20 @@ requirements:
     - pyyaml
     - six
     - tqdm
+    - nbconvert <6
 
 test:
+  # TODO: restore pip check, fails on `jupyter` whcih basically nobody needs
+  # requires:
+  #  - pip
   imports:
     - ansible_kernel
   commands:
+    # - pip check
     - jupyter kernelspec list
     - jupyter kernelspec list | grep kernels/ansible
     - cp ${RECIPE_DIR}/*.ipynb .
-    - jupyter nbconvert *.ipynb --execute
+    - jupyter nbconvert *.ipynb --execute --to=html
     - jupyter nbconvert *.ipynb --to ansible_tasks
     - jupyter nbconvert *.ipynb --to ansible_playbook
     - jupyter nbconvert *.ipynb --to ansible_zip
