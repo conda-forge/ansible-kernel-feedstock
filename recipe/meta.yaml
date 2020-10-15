@@ -32,11 +32,15 @@ requirements:
     - pyyaml
     - six
     - tqdm
+    - nbconvert <6
 
 test:
+  requires:
+    - pip
   imports:
     - ansible_kernel
   commands:
+    - pip check
     - jupyter kernelspec list
     - jupyter kernelspec list | grep kernels/ansible
     - cp ${RECIPE_DIR}/*.ipynb .
