@@ -23,7 +23,8 @@ requirements:
     - pip
     - python
   run:
-    - ansible
+    # TODO: investigate further
+    - ansible <2.10
     - ansible-runner >=1.1.0
     - docopt
     - ipywidgets
