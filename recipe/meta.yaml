@@ -1,5 +1,5 @@
 {% set name = "ansible-kernel" %}
-{% set version = "0.9.0" %}
+{% set version = "1.0.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,14 +7,14 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: a59039a1724c0f4f4435316e2ad3383f2328ae61f190e74414a66cc8c4637636
+  sha256: 5098e6f45a665d2ce75ed688476ad5bf96094bf1fcdc5bd190dcf4f6fc287b47
   patches:
     - 001_setup_py_sys_executable.patch
 
 build:
   skip: true  # [win]
   number: 0
-  script: "{{ PYTHON }} -m pip install . -vv"
+  script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
@@ -50,7 +50,7 @@ about:
   license: Apache-2.0
   license_family: Apache
   license_file: LICENSE.md
-  summary: 'Jupyter Notebook Kernel for running Ansible Tasks and Playbooks'
+  summary: Jupyter Notebook Kernel for running Ansible Tasks and Playbooks
   description: |
     The Ansible Jupyter Kernel adds a kernel backend for Jupyter to interface
     directly with Ansible and construct plays and tasks and execute them on the
