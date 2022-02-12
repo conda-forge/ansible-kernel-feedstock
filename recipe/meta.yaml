@@ -1,56 +1,56 @@
-{% set name = "ansible-kernel" %}
-{% set version = "0.9.0" %}
+{% set version = "1.0.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: ansible-kernel
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: a59039a1724c0f4f4435316e2ad3383f2328ae61f190e74414a66cc8c4637636
+  url: https://pypi.io/packages/source/a/ansible-kernel/ansible-kernel-{{ version }}.tar.gz
+  sha256: 5098e6f45a665d2ce75ed688476ad5bf96094bf1fcdc5bd190dcf4f6fc287b47
   patches:
     - 001_setup_py_sys_executable.patch
 
 build:
-  skip: true  # [win]
+  noarch: python
   number: 0
-  script: "{{ PYTHON }} -m pip install . -vv"
+  script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
     - ipython
     - jupyter_client
     - pip
-    - python
+    - python >=3.6
   run:
     - ansible
     - ansible-runner >=1.1.0
     - docopt
     - ipywidgets
     - psutil
-    - python
+    - python >=3.6
     - pyyaml
     - six
     - tqdm
 
 test:
+  files:
+    - HelloWorld.ipynb
   imports:
     - ansible_kernel
+  requires:
+    - pip
   commands:
+    - pip check
     - jupyter kernelspec list
     - jupyter kernelspec list | grep kernels/ansible
-    - cp ${RECIPE_DIR}/*.ipynb .
-    - jupyter nbconvert *.ipynb --execute
-    - jupyter nbconvert *.ipynb --to ansible_tasks
-    - jupyter nbconvert *.ipynb --to ansible_playbook
-    - jupyter nbconvert *.ipynb --to ansible_zip
+    - jupyter nbconvert HelloWorld.ipynb --to html --execute
 
 about:
   home: https://github.com/ansible/ansible-jupyter-kernel
   license: Apache-2.0
   license_family: Apache
   license_file: LICENSE.md
-  summary: 'Jupyter Notebook Kernel for running Ansible Tasks and Playbooks'
+  summary: Jupyter Notebook Kernel for running Ansible Tasks and Playbooks
   description: |
     The Ansible Jupyter Kernel adds a kernel backend for Jupyter to interface
     directly with Ansible and construct plays and tasks and execute them on the
