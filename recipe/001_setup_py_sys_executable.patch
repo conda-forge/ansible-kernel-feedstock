@@ -1,13 +1,15 @@
---- setup.py	2019-06-07 00:13:19.932861859 -0400
-+++ setup.py	2019-06-07 00:14:07.041155149 -0400
+diff --git a/setup.py b/setup.py
+index 18ed9fc..70b675d 100644
+--- a/setup.py
++++ b/setup.py
 @@ -1,5 +1,6 @@
  import json
  import os
 +import sys
  from setuptools import setup, find_packages
  from setuptools.command.install import install
-
-@@ -14,7 +15,7 @@
+ 
+@@ -14,7 +15,7 @@ class Installer(install):
          from jupyter_client.kernelspec import KernelSpecManager
          from IPython.utils.tempdir import TemporaryDirectory
          kernel_json = {
@@ -16,3 +18,11 @@
              "codemirror_mode": "yaml",
              "display_name": "Ansible",
              "language": "ansible"
+@@ -47,7 +48,6 @@ setup(
+         'ansible-runner>=1.1.0',
+         'PyYAML',
+         'psutil',
+-        'jupyter',
+         'tqdm',
+         'docopt',
+         'six',
