@@ -5,14 +5,14 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/a/ansible-kernel/ansible-kernel-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/a/ansible-kernel/ansible-kernel-{{ version }}.tar.gz
   sha256: 5098e6f45a665d2ce75ed688476ad5bf96094bf1fcdc5bd190dcf4f6fc287b47
   patches:
     - 001_setup_py_sys_executable.patch
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
@@ -20,14 +20,14 @@ requirements:
     - ipython
     - jupyter_client
     - pip
-    - python >=3.6
+    - python {{ python_min }}
   run:
     - ansible
     - ansible-runner >=1.1.0
     - docopt
     - ipywidgets
     - psutil
-    - python >=3.6
+    - python >={{ python_min }}
     - pyyaml
     - six
     - tqdm
@@ -39,6 +39,7 @@ test:
     - ansible_kernel
   requires:
     - pip
+    - python {{ python_min }}
   commands:
     - pip check
     - jupyter kernelspec list
